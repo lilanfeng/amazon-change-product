@@ -22,7 +22,7 @@ public class ConsoleUtil {
     private static final Log logger = LogFactory.get();
 
     public static void consoleWithLog(JTextArea textArea, String log) {
-        textArea.append(DateFormatUtils.format(new Date(), "yyyyMMdd-HH:mm:ss.SSS") + ":");
+        textArea.append(DateFormatUtils.format(new Date(), "yyyy-MM-dd-HH:mm:ss.SSS") + ":");
         textArea.append(log + "\n");
         textArea.setCaretPosition(textArea.getText().length());
         logger.info(log);
@@ -35,8 +35,7 @@ public class ConsoleUtil {
 
     public static String console(String log){
         StringBuilder str = new StringBuilder();
-        str.append(DateFormatUtils.format(new Date(), "yyyyMMdd-HH:mm:ss.SSS"));
-        str.append(":");
+        str.append(DateFormatUtils.format(new Date(), "yyyy-MM-dd-HH:mm:ss.SSS: "));
         str.append(log);
         //logger.info(str.toString());
         return str.toString();

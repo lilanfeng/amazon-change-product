@@ -62,7 +62,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="a1385" class="javax.swing.JButton" binding="buttonCancel">
+                  <component id="a1385" class="javax.swing.JButton" binding="buttonClear">
                     <constraints>
                       <grid row="0" column="3" row-span="3" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -70,7 +70,7 @@
                       <text value="清理信息"/>
                     </properties>
                   </component>
-                  <component id="ecec" class="javax.swing.JButton" binding="buttonOK">
+                  <component id="ecec" class="javax.swing.JButton" binding="buttonStart">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -80,7 +80,7 @@
                       <verticalAlignment value="0"/>
                     </properties>
                   </component>
-                  <component id="4227e" class="javax.swing.JButton" binding="buttonOpen">
+                  <component id="4227e" class="javax.swing.JButton" binding="buttonOpenIE">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -88,7 +88,7 @@
                       <text value="启动浏览器"/>
                     </properties>
                   </component>
-                  <component id="e4983" class="javax.swing.JButton" binding="buttonEnd">
+                  <component id="e4983" class="javax.swing.JButton" binding="buttonCancel">
                     <constraints>
                       <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -103,20 +103,20 @@
                   <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
-              <component id="4782a" class="javax.swing.JButton" binding="buttonExpoler">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="打开生成文件目录"/>
-                </properties>
-              </component>
               <component id="88492" class="javax.swing.JLabel" binding="selectCountryLabel">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Label"/>
+                </properties>
+              </component>
+              <component id="4782a" class="javax.swing.JButton" binding="buttonOpenExpoler">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="打开生成文件目录"/>
                 </properties>
               </component>
             </children>

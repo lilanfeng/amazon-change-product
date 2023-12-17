@@ -21,13 +21,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import javax.swing.*;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -314,8 +312,6 @@ public class HttpHelpUtil {
             try {
                 work.publishEvent(ConsoleUtil.console("本次超时或异常的间隔为：" + App.config.getTimeout(App.config.getCountryWeb()) + " ms"));
                 Thread.sleep(App.config.getTimeout(App.config.getCountryWeb()));
-                Thread.sleep(App.config.getTimeout(App.config.getCountryWeb()));
-                TimeUnit.SECONDS.sleep(App.config.getTimeout(App.config.getCountryWeb()));
             } catch (InterruptedException interruptedException) {
                 interruptedException.printStackTrace();
                 logger.error(interruptedException, "Sleep time out exception");
@@ -345,11 +341,9 @@ public class HttpHelpUtil {
 
         List<Product> productList = productInfo.getProducts();
         if (productList == null || productList.size() <= 0) {
-            logger.error("HttpHelpUtil..productList.size().is.null.or.zero,key:{},page:{}",key,currentPage);
+            logger.info("HttpHelpUtil..productList.size().is.null.or.zero,key:{},page:{}",key,currentPage);
             return ;
         }
-
-
         productList.stream().forEach(product -> {
 
             if (product == null) {
@@ -722,7 +716,6 @@ public class HttpHelpUtil {
      * @return
      */
     private static String changeHostUrl(String url){
-
         return StrUtil.replace(url, "{HOST}", CountryWebEnum.getChooseHost(App.config.getCountryWeb()));
 
     }

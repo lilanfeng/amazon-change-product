@@ -122,6 +122,14 @@ public class ProductChangeServiceImpl implements ProductChangeService {
                 }
             }
             isSecond.set(true);
+
+            if (productChangeWork.isStop()) {
+                // 完成一个文件后才取消任务
+                productChangeWork.publishEvent(ConsoleUtil.console("一个文件处理开始，开始取消处理！"));
+                productChangeWork.stopWork();
+                return;
+            }
+
             List<InputProductInfo> inputProductInfoList = getInputDataByFile(file, existAsinMap);
             this.productChangeWork.publishEvent(ConsoleUtil.console(
                     "本次" + file.getName() + "获取输入的产品的数量为：" + CollUtil.size(inputProductInfoList)));
@@ -242,6 +250,9 @@ public class ProductChangeServiceImpl implements ProductChangeService {
         list.stream().forEach(inputProductInfo -> {
             InputProductInfo outInfo = new InputProductInfo();
             boolean isSell = HttpHelpUtil.getChangeProduct(productChangeWork,inputProductInfo, cookie,outInfo);
+            if (productChangeWork.isStop()) {
+                productChangeWork.publishEvent(ConsoleUtil.console("取消进行中，等本文件解析完成就停止！"));
+            }
             if (isSell) {
                 outCount.getAndIncrement();
                 outInfo.setId(outCount.get());

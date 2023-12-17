@@ -11,8 +11,6 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.kevin.lee.App;
 import com.kevin.lee.enums.CountryWebEnum;
-import com.kevin.lee.service.impl.ProductChangeServiceImpl;
-import com.kevin.lee.utils.ConsoleUtil;
 import com.kevin.lee.worker.ProductChangeWork;
 import lombok.Getter;
 
@@ -38,87 +36,18 @@ public class ProductChangeForm {
     private static ProductChangeForm productChangeForm;
     private JPanel mainPanel;
     private JTextArea textArea1;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JButton buttonOpen;
+    private JButton buttonStart;
+    private JButton buttonClear;
+    private JButton buttonOpenIE;
     private JScrollPane mainScrollPane;
-    private JButton buttonExpoler;
+    private JButton buttonOpenExpoler;
     private JLabel selectCountryLabel;
-    private JButton buttonEnd;
+    private JButton buttonCancel;
 
+    /**
+     * 商品拉取程序实现入口
+     */
     private ProductChangeWork productChangeWork;
-
-    public ProductChangeForm() {
-        buttonCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try {
-                    productChangeForm.getTextArea1().getDocument().remove(0, productChangeForm.getTextArea1().getDocument().getLength());
-                    productChangeForm.getTextArea1().setText("");
-                } catch (BadLocationException ex) {
-                    ex.printStackTrace();
-                }
-                //productChangeForm.getTextArea1().setText("");
-            }
-        });
-
-        buttonOpen.addActionListener(e -> {
-            Desktop desktop = Desktop.getDesktop();
-            try {
-                desktop.browse(new URI("https://sellercentral.amazon.com/product-search/search?q=B00DHNJ724&ref_=xx_catadd_dnav_xx"));
-            } catch (IOException | URISyntaxException ex) {
-                ex.printStackTrace();
-            }
-        });
-        buttonOK.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                textArea1.setText("");
-                buttonOK.setEnabled(false);
-                productChangeWork = new ProductChangeWork(buttonOK, buttonEnd, textArea1);
-                productChangeWork.execute();
-                buttonEnd.setEnabled(true);
-
-            }
-        });
-        buttonEnd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                productChangeWork.cancel(true);
-            }
-        });
-        buttonEnd.setEnabled(false);
-
-
-        buttonExpoler.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String inputDir = App.config.getInputDir(App.config.getCountryWeb());
-                List<String> selectFileNameList = StrUtil.split(inputDir, ";", true, true);
-                if (selectFileNameList == null || selectFileNameList.size() <= 0) {
-                    JOptionPane.showMessageDialog(mainPanel, "转换后的目录暂时不存在!\n", "信息提示!", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-                String pathName = getOutDir(selectFileNameList.get(0)) + File.separator + DateUtil.format(LocalDateTime.now(),
-                        DatePattern.PURE_DATE_PATTERN);
-                File outDirFile = FileUtil.file(pathName);
-                if (!outDirFile.exists()) {
-                    JOptionPane.showMessageDialog(mainPanel, "转换后的目录暂时不存在!\n", "信息提示!", JOptionPane.INFORMATION_MESSAGE);
-                    return;
-                }
-                //Runtime.getRuntime().exec("explorer /e,/select," + outDirFile.getAbsolutePath());
-                try {
-                    Desktop.getDesktop().open(outDirFile);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-
-            }
-        });
-        selectCountryLabel.setText("当前的国家站点是:" + CountryWebEnum.getCountry(App.config.getCountryWeb()));
-    }
 
     public static ProductChangeForm getInstance() {
         if (productChangeForm == null) {
@@ -127,99 +56,74 @@ public class ProductChangeForm {
         return productChangeForm;
     }
 
+    public ProductChangeForm() {
 
-    private void onOK() {
-        buttonOK.setEnabled(false);
-        try {
-            ConsoleUtil.consoleWithLog(textArea1, "doChange Thread start ...");
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        doChange();
-                    } catch (Exception e) {
-                        logger.error(e, "doChange has exception.");
-                        ConsoleUtil.consoleWithLog(textArea1, "doChange exception ..." + e.getMessage());
-                        endChangeProduct();
-                    } catch (Throwable throwable) {
-                        logger.error(throwable, "doChange has exception.");
-                        ConsoleUtil.consoleWithLog(textArea1, "doChange Throwable ..." + throwable.getMessage());
-                        endChangeProduct();
-                    }
-                }
-            });
-            thread.start();
-            //ThreadUtil.execute(this::doChange);
-        } catch (Exception e) {
-            logger.error(e, "doChange Thread  has exception.");
-            ConsoleUtil.consoleWithLog(textArea1, "doChange Thread exception ..." + e.getMessage());
-            endChangeProduct();
-        } catch (Throwable throwable) {
-            logger.error(throwable, "doChange Thread has exception.");
-            ConsoleUtil.consoleWithLog(textArea1, "doChange Thread  Throwable ..." + throwable.getMessage());
-            endChangeProduct();
-        } finally {
-            ConsoleUtil.consoleWithLog(textArea1, "doChange Thread finally ...");
-        }
-        ConsoleUtil.consoleWithLog(textArea1, "doChange Thread start end ...");
+
+        buttonClear.addActionListener(e -> {
+            try {
+                productChangeForm.getTextArea1().getDocument().remove(0, productChangeForm.getTextArea1().getDocument().getLength());
+                productChangeForm.getTextArea1().setText("");
+            } catch (BadLocationException ex) {
+                ex.printStackTrace();
+            }
+            //productChangeForm.getTextArea1().setText("");
+        });
+
+        buttonOpenIE.addActionListener(e -> {
+            Desktop desktop = Desktop.getDesktop();
+            try {
+                desktop.browse(new URI("https://"+CountryWebEnum.getChooseHost(App.config.getCountryWeb())+"/product-search/search?q=B00DHNJ724&ref_=xx_catadd_dnav_xx"));
+            } catch (IOException | URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        });
+        buttonStart.addActionListener(e -> {
+            textArea1.setText("");
+            buttonStart.setEnabled(false);
+            productChangeWork = new ProductChangeWork(buttonStart, buttonCancel, textArea1);
+            productChangeWork.execute();
+            buttonCancel.setEnabled(true);
+
+        });
+        buttonCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                productChangeWork.setStop(true);
+                //productChangeWork.cancel(true);
+            }
+        });
+        buttonCancel.setEnabled(false);
+
+
+        buttonOpenExpoler.addActionListener(e -> {
+            String inputDir = App.config.getInputDir(App.config.getCountryWeb());
+            List<String> selectFileNameList = StrUtil.split(inputDir, ";", true, true);
+            if (selectFileNameList == null || selectFileNameList.size() <= 0) {
+                JOptionPane.showMessageDialog(mainPanel, "转换后的目录暂时不存在!\n", "信息提示!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            String pathName = getOutDir(selectFileNameList.get(0)) + File.separator + DateUtil.format(LocalDateTime.now(),
+                    DatePattern.PURE_DATE_PATTERN);
+            File outDirFile = FileUtil.file(pathName);
+            if (!outDirFile.exists()) {
+                JOptionPane.showMessageDialog(mainPanel, "转换后的目录暂时不存在!\n", "信息提示!", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            //Runtime.getRuntime().exec("explorer /e,/select," + outDirFile.getAbsolutePath());
+            try {
+                Desktop.getDesktop().open(outDirFile);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        selectCountryLabel.setText("当前的国家站点是:" + CountryWebEnum.getCountry(App.config.getCountryWeb()));
     }
+
 
     public void updateSelectCountryLabel() {
         selectCountryLabel.setText("当前的国家站点是:" + CountryWebEnum.getCountry(App.config.getCountryWeb()));
     }
 
-    /**
-     * 产品转换入口
-     */
-    private void doChange() {
-        ConsoleUtil.consoleWithLog(textArea1, "亚马逊产品转换开始处理...");
-        logger.info("Initializing System...");
-
-        String inputDir = App.config.getInputDir(App.config.getCountryWeb());
-        if (StrUtil.isBlank(inputDir)) {
-            ConsoleUtil.consoleWithLog(textArea1, "需要转换的产品的表格目录不能为空！！！");
-            endChangeProduct();
-            return;
-        }
-        List<String> selectFileNameList = StrUtil.split(inputDir, ";", true, true);
-
-        String cookies = App.config.getCookies(App.config.getCountryWeb());
-        if (StrUtil.isBlank(cookies)) {
-            ConsoleUtil.consoleWithLog(textArea1, "转换登录网站的Cookie不能为空！！！");
-            endChangeProduct();
-            return;
-        }
-        inputDir = selectFileNameList.get(0);
-
-        String outDir = getOutDir(inputDir);
-        inputDir = outDir;
-        String outDirName = outDir + File.separator + DateUtil.format(LocalDateTime.now(),
-                DatePattern.PURE_DATE_PATTERN) + File.separator + "product_change_" + DateUtil.format(LocalDateTime.now(),
-                DatePattern.PURE_DATETIME_MS_PATTERN) + ".xlsx";
-
-        try {
-            //ProductChangeServiceImpl productChangeService = new ProductChangeServiceImpl();
-            ConsoleUtil.consoleWithLog(textArea1, "亚马逊产品转换doProductChange.start...");
-            //productChangeService.doProductChange(textArea1, selectFileNameList, outDirName, cookies);
-            ConsoleUtil.consoleWithLog(textArea1, "亚马逊产品转换doProductChange.end...");
-
-        } catch (Throwable e) {
-            logger.error(e, "ProductChangeForm.doProductChange.throwable inputDir:{},outDirName:{},cookies:{}", inputDir, outDirName, cookies);
-            ConsoleUtil.consoleWithLog(textArea1, "产品转换过程中发生异常:" + e.getMessage());
-            endChangeProduct();
-            return;
-        }
-
-        JOptionPane.showMessageDialog(mainPanel, "转换完成!\n", "成功!", JOptionPane.PLAIN_MESSAGE);
-        endChangeProduct();
-        return;
-
-    }
-
-    private void endChangeProduct() {
-        ConsoleUtil.consoleWithLog(textArea1, "亚马逊产品转换处理结束...");
-        buttonOK.setEnabled(true);
-    }
 
     /**
      * @param inputDir
@@ -291,37 +195,37 @@ public class ProductChangeForm {
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0,
                 false));
-        buttonCancel = new JButton();
-        buttonCancel.setText("清理信息");
-        panel3.add(buttonCancel, new GridConstraints(0, 3, 3, 1, GridConstraints.ANCHOR_CENTER,
+        buttonClear = new JButton();
+        buttonClear.setText("清理信息");
+        panel3.add(buttonClear, new GridConstraints(0, 3, 3, 1, GridConstraints.ANCHOR_CENTER,
                 GridConstraints.FILL_HORIZONTAL,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        buttonOK = new JButton();
-        buttonOK.setHorizontalAlignment(0);
-        buttonOK.setText("开始");
-        buttonOK.setVerticalAlignment(0);
-        panel3.add(buttonOK, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH
+        buttonStart = new JButton();
+        buttonStart.setHorizontalAlignment(0);
+        buttonStart.setText("开始");
+        buttonStart.setVerticalAlignment(0);
+        panel3.add(buttonStart, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH
                 , GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        buttonOpen = new JButton();
-        buttonOpen.setText("启动浏览器");
-        panel3.add(buttonOpen, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
+        buttonOpenIE = new JButton();
+        buttonOpenIE.setText("启动浏览器");
+        panel3.add(buttonOpenIE, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER,
                 GridConstraints.FILL_HORIZONTAL,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        buttonEnd = new JButton();
-        buttonEnd.setText("取消");
-        panel3.add(buttonEnd, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
+        buttonCancel = new JButton();
+        buttonCancel.setText("取消");
+        panel3.add(buttonCancel, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER,
                 GridConstraints.FILL_HORIZONTAL,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel2.add(spacer1, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
                 GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
-        buttonExpoler = new JButton();
-        buttonExpoler.setText("打开生成文件目录");
-        panel2.add(buttonExpoler, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
+        buttonOpenExpoler = new JButton();
+        buttonOpenExpoler.setText("打开生成文件目录");
+        panel2.add(buttonOpenExpoler, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
                 GridConstraints.FILL_HORIZONTAL,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

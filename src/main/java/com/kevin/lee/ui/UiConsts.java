@@ -11,7 +11,7 @@ import java.awt.*;
 public class UiConsts {
 
     public static final String APP_NAME = "亚马逊产品转换工具";
-    public static final String APP_VERSION = "1.0.2";
+    public static final String APP_VERSION = "1.1.0";
 
     public static final int TABLE_ROW_HEIGHT = 36;
 

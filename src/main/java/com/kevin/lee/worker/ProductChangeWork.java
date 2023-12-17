@@ -4,6 +4,7 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.log.dialect.console.ConsoleLog;
 import com.kevin.lee.App;
 import com.kevin.lee.dto.ProgressData;
 import com.kevin.lee.service.impl.ProductChangeServiceImpl;
@@ -25,14 +26,17 @@ import java.util.concurrent.ExecutionException;
 public class ProductChangeWork extends SwingWorker<StringBuilder, ProgressData> {
 
     private JTextArea textArea1;
-    private JButton buttonOK;
-    private JButton buttonEnd;
+    private JButton buttonStart;
+    private JButton buttonCancel;
+    private boolean isStop;
 
-    public ProductChangeWork(JButton buttonOK,JButton buttonEnd,JTextArea textArea1){
-        this.buttonOK = buttonOK;
-        this.buttonEnd = buttonEnd;
+    public ProductChangeWork(JButton buttonStart,JButton buttonCancel,JTextArea textArea1){
+        this.buttonStart = buttonStart;
+        this.buttonCancel = buttonCancel;
         this.textArea1 = textArea1;
+        this.isStop = false;
     }
+
 
 
     @Override
@@ -99,22 +103,38 @@ public class ProductChangeWork extends SwingWorker<StringBuilder, ProgressData> 
             if(result != null){
                 textArea1.setText(result.toString());
             }
-
         } catch (InterruptedException e){
 
         } catch (CancellationException ex){
-            textArea1.setText("");
+            textArea1.append(ConsoleUtil.console("取消完成"));
         } catch (ExecutionException ex){
             textArea1.setText("" + ex.getCause());
         }
-        buttonEnd.setEnabled(false);
-        buttonOK.setEnabled(true);
+        buttonCancel.setEnabled(false);
+        buttonStart.setEnabled(true);
     }
 
     public void publishEvent(String message){
         this.publish(new ProgressData(message));
     }
 
+
+    /**
+     * 正在结束任务
+     */
+    public void stopWork(){
+        this.cancel(true);
+    }
+
+    public boolean isStop() {
+        return isStop;
+    }
+
+    public void setStop(boolean stop) {
+        isStop = stop;
+        buttonCancel.setEnabled(false);
+        publishEvent(ConsoleUtil.console("开始取消任务...."));
+    }
 
     /**
      * @param inputDir

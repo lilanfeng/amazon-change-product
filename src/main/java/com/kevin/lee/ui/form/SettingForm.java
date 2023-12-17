@@ -2,7 +2,6 @@ package com.kevin.lee.ui.form;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson2.JSON;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -40,6 +39,8 @@ public class SettingForm {
     private static SettingForm settingForm;
 
     public SettingForm() {
+        textAreaCookie.setLineWrap(true);
+
         buttonSelect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

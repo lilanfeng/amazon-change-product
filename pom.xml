@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.kevin.lee</groupId>
+  <artifactId>amazon-change-product</artifactId>
+  <version>0.0.1</version>
+  <name>amazon-change-product</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+
+    <logback.version>1.2.5</logback.version>
+    <forms_rt.version>7.0.3</forms_rt.version>
+    <lombok.version>1.18.24</lombok.version>
+    <junit-jupiter-api.version>5.9.1</junit-jupiter-api.version>
+    <commons-lang3.version>3.12.0</commons-lang3.version>
+    <guava.version>31.1-jre</guava.version>
+    <okhttp.version>4.10.0</okhttp.version>
+    <flatlaf.version>3.1.1</flatlaf.version>
+    <flatlaf-extras.version>3.1.1</flatlaf-extras.version>
+    <flatlaf-intellij-themes.version>3.1.1</flatlaf-intellij-themes.version>
+    <hutool-all.version>5.8.21</hutool-all.version>
+    <fastjson.version>2.0.22</fastjson.version>
+    <oshi-core.version>6.4.4</oshi-core.version>
+  </properties>
+
+
+  <dependencies>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.5</version>
+<!--      <version>${logback.version}</version>-->
+    </dependency>
+
+    <!--GUI Designer -> binary class files-->
+    <dependency>
+      <groupId>com.intellij</groupId>
+      <artifactId>forms_rt</artifactId>
+      <version>${forms_rt.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>com.squareup.okhttp3</groupId>-->
+<!--      <artifactId>okhttp</artifactId>-->
+<!--      <version>${okhttp.version}</version>-->
+<!--      &lt;!&ndash;            <exclusions>&ndash;&gt;-->
+<!--      &lt;!&ndash;                <exclusion>&ndash;&gt;-->
+<!--      &lt;!&ndash;                    <artifactId>kotlin-stdlib</artifactId>&ndash;&gt;-->
+<!--      &lt;!&ndash;                    <groupId>org.jetbrains.kotlin</groupId>&ndash;&gt;-->
+<!--      &lt;!&ndash;                </exclusion>&ndash;&gt;-->
+<!--      &lt;!&ndash;            </exclusions>&ndash;&gt;-->
+<!--    </dependency>-->
+
+
+    <dependency>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf</artifactId>
+      <version>${flatlaf.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf-extras</artifactId>
+      <version>${flatlaf-extras.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf-intellij-themes</artifactId>
+      <version>${flatlaf-intellij-themes.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>cn.hutool</groupId>
+      <artifactId>hutool-all</artifactId>
+      <version>${hutool-all.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.oshi</groupId>
+      <artifactId>oshi-core</artifactId>
+      <version>${oshi-core.version}</version>
+    </dependency>
+    <!--
+
+         <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi</artifactId>
+           <version>5.2.2</version>
+         </dependency>
+
+         <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi-ooxml-full</artifactId>
+           <version>5.2.2</version>
+         </dependency>
+         -->
+
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>5.2.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.17.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jdeferred</groupId>
+      <artifactId>jdeferred-core</artifactId>
+      <version>1.2.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.keepa.api</groupId>
+      <artifactId>backend</artifactId>
+      <version>LATEST</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.13.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>3.141.59</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+           <descriptor>src/main/assembly/assembly.xml</descriptor>
+
+          <archive>
+            <manifest>
+             <mainClass>com.kevin.lee.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>Keepa</id>
+      <name>Keepa Repository</name>
+      <url>https://keepa.com/maven/</url>
+    </repository>
+  </repositories>
+</project>

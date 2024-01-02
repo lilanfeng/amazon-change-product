@@ -11,7 +11,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.kevin.lee.App;
 import com.kevin.lee.service.impl.ProductChangeServiceImpl;
-import com.kevin.lee.service.impl.ProductListServiceImpl;
+//import com.kevin.lee.service.impl.ProductListServiceImpl;
 import com.kevin.lee.utils.ConsoleUtil;
 import lombok.Getter;
 
@@ -150,10 +150,10 @@ public class ProductListForm {
         //        DatePattern.PURE_DATETIME_MS_PATTERN) + ".xlsx";
 
         try {
-            ProductListServiceImpl productListService = new ProductListServiceImpl();
-            ConsoleUtil.consoleWithLog(textArea1, "亚马逊产品搜索列表doProductList.start...");
-            productListService.doProductList(textArea1, searchKeyList, outDir, cookies);
-            ConsoleUtil.consoleWithLog(textArea1, "亚马逊产品搜索列表doProductList.end...");
+//            ProductListServiceImpl productListService = new ProductListServiceImpl();
+//            ConsoleUtil.consoleWithLog(textArea1, "亚马逊产品搜索列表doProductList.start...");
+//            productListService.doProductList(textArea1, searchKeyList, outDir, cookies);
+//            ConsoleUtil.consoleWithLog(textArea1, "亚马逊产品搜索列表doProductList.end...");
 
         } catch (Throwable e) {
             logger.error(e, "ProductListForm.doProductList.throwable searchKeys:{},outDirName:{},cookies:{}", searchKeys, outDir, cookies);

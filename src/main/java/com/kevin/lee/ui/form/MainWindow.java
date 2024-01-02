@@ -24,6 +24,7 @@ public class MainWindow {
     private JPanel overviewPanel;
     private JPanel productChangePanel;
     private JPanel settingPanel;
+    private JPanel productInventoryPanel;
 
     private static MainWindow mainWindow;
 
@@ -59,6 +60,7 @@ public class MainWindow {
         //mainWindow.getTabbedPane().setEnabledAt(1, false);
 
         mainWindow.getSettingPanel().add(SettingForm.getInstance().getMainScrollPane(), gridConstraints);
+        mainWindow.getProductInventoryPanel().add(ProductInventoryForm.getInstance().getMainPanel(),gridConstraints);
 
         mainWindow.getMainPanel().updateUI();
 

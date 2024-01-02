@@ -72,7 +72,7 @@ public class ProductChangeForm {
         buttonOpenIE.addActionListener(e -> {
             Desktop desktop = Desktop.getDesktop();
             try {
-                desktop.browse(new URI("https://"+CountryWebEnum.getChooseHost(App.config.getCountryWeb())+"/product-search/search?q=B00DHNJ724&ref_=xx_catadd_dnav_xx"));
+                desktop.browse(new URI("https://" + CountryWebEnum.getChooseHost(App.config.getCountryWeb()) + "/product-search/search?q=B00DHNJ724&ref_=xx_catadd_dnav_xx"));
             } catch (IOException | URISyntaxException ex) {
                 ex.printStackTrace();
             }
@@ -116,7 +116,7 @@ public class ProductChangeForm {
                 ex.printStackTrace();
             }
         });
-        selectCountryLabel.setText("当前的国家站点是:" + CountryWebEnum.getCountry(App.config.getCountryWeb()));
+        updateSelectCountryLabel();
     }
 
 
@@ -205,8 +205,9 @@ public class ProductChangeForm {
         buttonStart.setHorizontalAlignment(0);
         buttonStart.setText("开始");
         buttonStart.setVerticalAlignment(0);
-        panel3.add(buttonStart, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH
-                , GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+        panel3.add(buttonStart, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
+                GridConstraints.FILL_BOTH,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         buttonOpenIE = new JButton();
         buttonOpenIE.setText("启动浏览器");
@@ -223,17 +224,17 @@ public class ProductChangeForm {
         final Spacer spacer1 = new Spacer();
         panel2.add(spacer1, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER,
                 GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        selectCountryLabel = new JLabel();
+        selectCountryLabel.setText("Label");
+        panel2.add(selectCountryLabel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST,
+                GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
+                null, null, 0, false));
         buttonOpenExpoler = new JButton();
         buttonOpenExpoler.setText("打开生成文件目录");
         panel2.add(buttonOpenExpoler, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER,
                 GridConstraints.FILL_HORIZONTAL,
                 GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
                 GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        selectCountryLabel = new JLabel();
-        selectCountryLabel.setText("Label");
-        panel2.add(selectCountryLabel, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST,
-                GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
-                null, null, 0, false));
     }
 
     /**

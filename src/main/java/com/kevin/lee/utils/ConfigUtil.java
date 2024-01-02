@@ -177,6 +177,14 @@ public class ConfigUtil extends ConfigBaseUtil {
         setting.putByGroup("inputDir", "setting.common."+countryWeb, inputDir);
     }
 
+    public String getInventoryInputDir(String countryWeb) {
+        return setting.getStr("inventoryInputDir", "setting.common."+countryWeb, "");
+    }
+
+    public void setInventoryInputDir(String inputDir,String countryWeb) {
+        setting.putByGroup("inventoryInputDir", "setting.common."+countryWeb, inputDir);
+    }
+
     public int getSleepTime(String countryWeb) {
         return setting.getInt("sleepTime", "setting.common."+countryWeb, 500);
     }

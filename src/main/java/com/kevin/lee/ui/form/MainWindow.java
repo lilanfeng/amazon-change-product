@@ -33,6 +33,7 @@ public class MainWindow {
             @Override
             public void stateChanged(ChangeEvent e) {
                 ProductChangeForm.getInstance().updateSelectCountryLabel();
+                ProductInventoryForm.getInstance().updateSelectCountryLabel();
             }
         });
     }
@@ -60,7 +61,7 @@ public class MainWindow {
         //mainWindow.getTabbedPane().setEnabledAt(1, false);
 
         mainWindow.getSettingPanel().add(SettingForm.getInstance().getMainScrollPane(), gridConstraints);
-        mainWindow.getProductInventoryPanel().add(ProductInventoryForm.getInstance().getMainPanel(),gridConstraints);
+        mainWindow.getProductInventoryPanel().add(ProductInventoryForm.getInstance().getMainPanel(), gridConstraints);
 
         mainWindow.getMainPanel().updateUI();
 
@@ -97,6 +98,9 @@ public class MainWindow {
         settingPanel = new JPanel();
         settingPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         tabbedPane.addTab("设置", settingPanel);
+        productInventoryPanel = new JPanel();
+        productInventoryPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        tabbedPane.addTab("ASIN列表搜索", productInventoryPanel);
         overviewPanel = new JPanel();
         overviewPanel.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         overviewPanel.setName("");

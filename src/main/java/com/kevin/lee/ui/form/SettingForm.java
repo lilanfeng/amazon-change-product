@@ -35,12 +35,42 @@ public class SettingForm {
     private JTextPane textPaneTimeout;
     private JLabel selectCountryLabel;
     private JComboBox selectCountryComboBox;
+    private JButton inventorySelectButton;
+    private JTextPane inventoryInputDirTextPane;
 
     private static SettingForm settingForm;
 
     public SettingForm() {
         textAreaCookie.setLineWrap(true);
 
+        inventorySelectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooser = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel表格文件", "xlsx", "xls");
+                chooser.setFileFilter(filter);
+                chooser.setMultiSelectionEnabled(true);
+
+                //int returnVal = chooser.showOpenDialog(new JPanel());
+                chooser.showSaveDialog(mainPanel);
+
+                //File selectFile = chooser.getSelectedFile();
+                File[] selectFileArr = chooser.getSelectedFiles();
+                StringBuilder inputDir = new StringBuilder();
+                if (selectFileArr != null && selectFileArr.length > 0) {
+                    for (int i = 0; i < selectFileArr.length; i++) {
+                        File selectFile = selectFileArr[i];
+                        if (selectFile != null) {
+                            if (selectFile.isFile()) {
+                                inputDir.append(selectFile.getAbsolutePath()).append(";");
+                            }
+                        }
+                    }
+                }
+
+                inventoryInputDirTextPane.setText(inputDir.toString());
+            }
+        });
         buttonSelect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,16 +105,17 @@ public class SettingForm {
                 buttonSave.setEnabled(false);
                 String cookie = textAreaCookie.getText();
                 String inputDir = textPaneInputDir.getText();
+                String  inventoryInputDir = inventoryInputDirTextPane.getText();
                 if (StrUtil.isBlank(cookie)) {
                     JOptionPane.showMessageDialog(mainPanel, "Cookies不能为空,请输入对应的值!\n", "失败!", JOptionPane.ERROR_MESSAGE);
                     buttonSave.setEnabled(true);
                     return;
                 }
-                if (StrUtil.isBlank(inputDir)) {
-                    JOptionPane.showMessageDialog(mainPanel, "请选择对应的输入文件!\n", "失败!", JOptionPane.ERROR_MESSAGE);
-                    buttonSave.setEnabled(true);
-                    return;
-                }
+//                if (StrUtil.isBlank(inputDir)) {
+//                    JOptionPane.showMessageDialog(mainPanel, "请选择对应的输入文件!\n", "失败!", JOptionPane.ERROR_MESSAGE);
+//                    buttonSave.setEnabled(true);
+//                    return;
+//                }
                 int sleepTime = 500;
                 try {
                     sleepTime = NumberUtil.parseInt(textPaneSleepTime.getText());
@@ -124,11 +155,10 @@ public class SettingForm {
                     return;
                 }
 //                String searchKeys = textArea1.getText();
-//
 //                String searchDir = textPaneSave.getText();
 //                String keePaKey = textPaneKeePaKey.getText();
                 String countryWeb = CountryWebEnum.getValue(selectCountryComboBox.getSelectedItem().toString());
-
+                App.config.setInventoryInputDir(inventoryInputDir,countryWeb);
                 App.config.setCountryWeb(countryWeb);
                 App.config.setCookies(cookie, countryWeb);
                 App.config.setInputDir(inputDir, countryWeb);
@@ -169,6 +199,7 @@ public class SettingForm {
         selectCountryComboBox.setSelectedItem(CountryWebEnum.getCountry(App.config.getCountryWeb()));
 
         textPaneInputDir.setText(App.config.getInputDir(App.config.getCountryWeb()));
+        inventoryInputDirTextPane.setText(App.config.getInventoryInputDir(App.config.getCountryWeb()));
         textAreaCookie.setText(App.config.getCookies(App.config.getCountryWeb()));
         textPaneSleepTime.setText(String.valueOf(App.config.getSleepTime(App.config.getCountryWeb())));
         textPaneFileTimeout.setText(String.valueOf(App.config.getFileTimeout(App.config.getCountryWeb())));
@@ -192,6 +223,7 @@ public class SettingForm {
 
                 String countryWeb = CountryWebEnum.getValue(selectCountryComboBox.getSelectedItem().toString());
 
+                inventoryInputDirTextPane.setText(App.config.getInventoryInputDir(countryWeb));
                 textPaneInputDir.setText(App.config.getInputDir(countryWeb));
                 textAreaCookie.setText(App.config.getCookies(countryWeb));
                 textPaneSleepTime.setText(String.valueOf(App.config.getSleepTime(countryWeb)));
@@ -230,6 +262,9 @@ public class SettingForm {
      */
     private void $$$setupUI$$$() {
         mainScrollPane = new JScrollPane();
+        mainScrollPane.setAlignmentX(1.0f);
+        mainScrollPane.setAlignmentY(1.0f);
+        mainScrollPane.putClientProperty("html.disable", Boolean.FALSE);
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         mainPanel.setMaximumSize(new Dimension(1024, 768));
